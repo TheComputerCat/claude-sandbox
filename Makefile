@@ -17,7 +17,7 @@ build:
 	docker --context colima-claude build --build-arg SSH_PUBLIC_KEY="$$(cat ~/.ssh/claude_sandbox.pub)" -t $(IMAGE_NAME) .
 
 start:
-	colima start -p claude --vm-type vz --vz-rosetta --cpu 2 --memory 4
+	colima start -p claude --vm-type vz --vz-rosetta --cpu 2 --memory 4 --disk 20 --mount=none
 
 stop:
 	colima stop -p claude
