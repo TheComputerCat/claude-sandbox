@@ -14,13 +14,13 @@ help:
 	@echo "  claude  Start Colima + container + Claude Code"
 
 build:
-	docker build --build-arg SSH_PUBLIC_KEY="$$(cat ~/.ssh/claude_sandbox.pub)" -t $(IMAGE_NAME) .
+	docker --context colima-claude build --build-arg SSH_PUBLIC_KEY="$$(cat ~/.ssh/claude_sandbox.pub)" -t $(IMAGE_NAME) .
 
 start:
-	colima start --vm-type vz --vz-rosetta --cpu 2 --memory 4
+	colima start -p claude --vm-type vz --vz-rosetta --cpu 2 --memory 4
 
 stop:
-	colima stop
+	colima stop -p claude
 
 _run:
 	docker run -d --rm \
@@ -32,4 +32,4 @@ _run:
 run: _run
 
 claude: start _run
-	docker exec -it claude-sandbox su - claude -c "claude"
+	docker --context colima-claude exec -it claude-sandbox su - claude -c "claude"
