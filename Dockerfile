@@ -8,6 +8,8 @@ RUN apt-get update && apt-get install -y \
     unzip \
     vim \
     tmux \
+    docker.io \
+    docker-compose \
     && rm -rf /var/lib/apt/lists/*
 
 RUN useradd -m -s /bin/bash claude && \

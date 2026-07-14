@@ -23,8 +23,9 @@ stop:
 	colima stop -p claude
 
 _run:
-	docker run -d --rm \
+	docker --context colima-claude run -d --rm \
 	-v "$(CLAUDE_HOME):/home/claude" \
+	-v /var/run/docker.sock:/var/run/docker.sock \
 	-p "$(SSH_PORT):22" \
 	--name claude-sandbox \
 	$(IMAGE_NAME)

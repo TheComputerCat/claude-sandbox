@@ -17,4 +17,12 @@ else
     cp /home/claude/.ssh/host_keys/ssh_host_* /etc/ssh/
 fi
 
+if [ -S /var/run/docker.sock ]; then
+    DOCKER_GID=$(stat -c '%g' /var/run/docker.sock)
+    if ! getent group "$DOCKER_GID" > /dev/null; then
+        groupadd -g "$DOCKER_GID" docker-host
+    fi
+    usermod -aG "$DOCKER_GID" claude
+fi
+
 exec /usr/sbin/sshd -D
